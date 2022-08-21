@@ -24,6 +24,7 @@ const htmltaskcontent = ({ id, title, description, type, url }) => `
          
          <p class="card-task-description trim-3-lines text-muted" data-gram_editor="false">${description}</p>
          <h5 class="card-task-type bg-primary m-1">${type}</h5>
+         </div>
          <div class="card-footer">
          <button type="button" 
          class="btn btn-outline-primary float-right" 
@@ -31,7 +32,7 @@ const htmltaskcontent = ({ id, title, description, type, url }) => `
          dats-bs-target="#showtask"
         
          >Open task</button>
-         </div>
+         
          </div>
       </div>
   </div>
@@ -71,6 +72,7 @@ const loadinitialdata = () => {
 };
 
 const handlesubmit = (event) => {
+
    const id = `${Date.now()}`;
    const input = {
       url: document.getElementById("imageurl").value,
@@ -78,14 +80,16 @@ const handlesubmit = (event) => {
       description: document.getElementById("taskdescription").value,
       type: document.getElementById("tasktype").value,
 
-   }
+   };
+
+
+
+   taskContents.insertAdjacentHTML("beforeend", htmltaskcontent({
+      ...input, id,
+   })
+   );
+
+   state.taskList.push({ ...input, id });
+   updatelocalstorage();
+
 };
-
-taskContents.insertAdjacentHTML("beforeend", htmltaskcontent({
-   ...input, id,
-})
-);
-
-state.taskList.push({ ...input, id });
-updatelocalstorage();
-
